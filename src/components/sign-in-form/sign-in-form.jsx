@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopup ,signInAuthEmailAndPassword} from "../../utils/firebase/firebase.utils";
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopup, signInAuthEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import { FormInput } from "../form-input/form-input.component"
 import "./sign-in-form.style.scss";
 import Button from "../button/button.component";
+
 
 
 const defaultFormFields =
@@ -19,6 +20,7 @@ const SignInForm = () => {
         email,
         password,
     } = formFields;
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormFields({ ...formFields, [name]: value });
@@ -27,29 +29,27 @@ const SignInForm = () => {
         setFormFields(defaultFormFields);
     }
     const signInWithGoogle = async (event) => {
-        const { user } = signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
+        signInWithGooglePopup();
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await signInAuthEmailAndPassword(email, password);
-            console.log(response);
+            const { user } = await signInAuthEmailAndPassword(email, password);
+            // setCurrentUser(user);
             // resetForm();
 
         } catch (e) {
-            console.log(e, "error");
-            switch(e.code){
+            switch (e.code) {
                 case 'auth/user-not-found':
-                    alert("email  not found");  
+                    alert("email  not found");
                     break;
                 case 'auth/wrong-password':
-                    alert("password wrong");  
+                    alert("password wrong");
                     break;
                 default:
                     console.log(e, "error");
-            }            
+            }
         }
     };
 
@@ -64,7 +64,7 @@ const SignInForm = () => {
 
                 <FormInput label='Password' required type="password" onChange={handleChange} name="password" value={password} />
                 <div className="buttons-container">
-                    <Button  type='submit'> Sign In </Button>
+                    <Button type='submit'> Sign In </Button>
                     <Button type='button' onClick={signInWithGoogle} buttonType='google'>Google Sign In </Button>
                 </div>
             </form>

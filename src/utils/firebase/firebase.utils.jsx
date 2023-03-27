@@ -1,7 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword,
-signInWithEmailAndPassword
+import {
+    getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
 
 } from "firebase/auth";
 
@@ -49,18 +52,22 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
                 ...additionalInformation
             });
         } catch (error) {
-            console.log(error,"error");
+            console.log(error, "error");
         }
     }
 }
 
-export const createAuthUserWithEmailAndPassword = async (email,password) => {
-    if(!email || !password) return ;
-    return await createUserWithEmailAndPassword(auth,email,password);
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+    return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInAuthEmailAndPassword = async (email,password) => {
-    if(!email || !password) return ;
-    return await signInWithEmailAndPassword(auth,email,password);
+export const signInAuthEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+    return await signInWithEmailAndPassword(auth, email, password);
 };
+
+
+export const signOutUser = async () => await signOut(auth);
+export const onAuthStateChangedListener = async (cb) => onAuthStateChanged(auth, cb);
 
