@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState,useReducer } from "react";
 import { createContext } from "react";
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from "../utils/firebase/firebase.utils";
-import { createAction } from "../reducer/reducer.util";
+import { createAction } from "../utils/reducer/reducer.utils";
 export const USER_ACTION_TYPES ={
     SET_CURRENT_USER :"SET_CURRENT_USER"
 }
