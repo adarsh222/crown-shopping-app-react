@@ -15,11 +15,13 @@ import CardDropDown from '../../components/card-dropdown/card-dropdown.component
 import { CartContext } from '../../context/cart.context';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../store/user/user.selector';
+import { selectIsCartOpen } from '../../store/cart/cart.selector';
 
 const Navigation = () => {
     const  currentUser =useSelector(selectCurrentUser);
+    const isCartOpen = useSelector(selectIsCartOpen);
     // const { currentUser } = useContext(UserContext);
-    const { isCartOpen } = useContext(CartContext);
+    // const { isCartOpen } = useContext(CartContext);
 
     return (
         <Fragment>

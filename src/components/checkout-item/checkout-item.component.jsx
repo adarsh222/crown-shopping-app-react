@@ -1,10 +1,21 @@
 import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CartContext } from "../../context/cart.context";
+import { addItemToCart, clearItemFromCart, removeItemFromCart } from "../../store/cart/cart.action";
+import { selectCartItems } from "../../store/cart/cart.selector";
 import "./checkout-item.styles.scss";
 
 
 const CheckOutItem = ({ cartItem }) => {
-    const { addItemToCart, removeItemFromCart, clearItemFromCart } = useContext(CartContext);
+    // const { addItemToCart, removeItemFromCart, clearItemFromCart } = useContext(CartContext);
+    const dispatch = useDispatch();
+    const cartItems = useSelector(selectCartItems);
+
+    const clearItemHandler = () =>
+        dispatch(clearItemFromCart(cartItems, cartItem));
+    const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
+    const removeItemHandler = () =>
+        dispatch(removeItemFromCart(cartItems, cartItem));
     const { name, quantity, imageUrl, price } = cartItem;
     return (<div className="checkout-item-container">
         <div className="image-container">
@@ -12,17 +23,17 @@ const CheckOutItem = ({ cartItem }) => {
         </div>
         <span className="name">{name}</span>
         <span className="quantity">
-            <div className="arrow" onClick={() => { removeItemFromCart(cartItem) }}>
+            <div className="arrow" onClick={() => { removeItemHandler() }}>
                 &#10094;
             </div>
             <span className="value">{quantity}</span>
-            <div className="arrow" onClick={() => { addItemToCart(cartItem) }}>
+            <div className="arrow" onClick={() => { addItemHandler() }}>
                 &#10095;
 
             </div>
         </span>
         <span className="price">{price}</span>
-        <div className="remove-button" onClick={() => { clearItemFromCart(cartItem) }}> &#10005;</div>
+        <div className="remove-button" onClick={() => { clearItemHandler() }}> &#10005;</div>
 
     </div>);
 }
