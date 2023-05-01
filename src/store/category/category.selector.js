@@ -14,3 +14,5 @@ export const selectCategoriesMap = (state) => {
         return acc;
     }, {});
 }
+
+export const selectIsLoading = (state)=>state.isLoading;
